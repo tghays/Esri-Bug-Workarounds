@@ -1,7 +1,12 @@
-from xml.etree import ElementTree as et
+import xml.dom.minidom as DOM
+in_xml_file = r"<path>\<to>\<the>\portal_test_service.sddraft"
+out_xml_file = r"<path>\<to>\<the>\portal_test_service_ForWeb.sddraft"
 
-xml_file = r"<path>\<to>\<the>\test_service_ForWeb.sddraft"
-tree = et.parse(xml_file)
+doc = DOM.parse(in_xml_file)
+keys = doc.getElementsByTagName('Type')
+key = keys[0]
+key.firstChild.nodeValue = 'esriServiceDefinitionType_Replacement'
 
-find = tree.find('Type').text = ('esriServiceDefinitionType_Replace')
-tree.write(xml_file)
+f = open(out_xml_file, 'w')
+doc.writexml( f )
+f.close()
